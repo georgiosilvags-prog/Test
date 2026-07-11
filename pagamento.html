@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevShop - Pagamento</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">DevShop</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="carrinho.html">Carrinho 🛒</a></li>
+                    <li><a href="historico.html">Meus Pedidos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container content">
+        <h2 class="section-title">Finalizar Pagamento</h2>
+        
+        <div class="payment-layout" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start;">
+            
+            <div class="contact-form" style="max-width: 100%; margin: 0;">
+                <h3 style="margin-bottom: 1.5rem; color: #0f172a;">Selecione a Forma de Pagamento</h3>
+                
+                <div class="payment-methods-grid">
+                    <label class="method-option">
+                        <input type="radio" name="forma-pagamento" value="pix" checked onchange="alternarMetodoPagamento('pix')">
+                        <div class="method-box">
+                            <span class="method-icon">⚡</span>
+                            <span>Pix</span>
+                        </div>
+                    </label>
+                    <label class="method-option">
+                        <input type="radio" name="forma-pagamento" value="cartao" onchange="alternarMetodoPagamento('cartao')">
+                        <div class="method-box">
+                            <span class="method-icon">💳</span>
+                            <span>Cartão</span>
+                        </div>
+                    </label>
+                    <label class="method-option">
+                        <input type="radio" name="forma-pagamento" value="boleto" onchange="alternarMetodoPagamento('boleto')">
+                        <div class="method-box">
+                            <span class="method-icon">📄</span>
+                            <span>Boleto</span>
+                        </div>
+                    </label>
+                </div>
+
+                <form id="form-pagamento-dinamico" onsubmit="processarPagamentoSimulado(event)">
+                    
+                    <div id="area-pix" class="metodo-secao">
+                        <div style="text-align: center; padding: 1rem 0;">
+                            <p style="margin-bottom: 1rem; color: #475569; font-size: 0.95rem;">Aprovação instantânea! Um QR Code e a chave Copia e Cola serão gerados após clicar no botão.</p>
+                            <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1rem; border-radius: 8px; display: inline-block; color: #0f172a; font-weight: 600;">
+                                Ganhe 5% de desconto pagando via PIX!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="area-cartao" class="metodo-secao" style="display: none;">
+                        <div class="form-group">
+                            <label for="card-name">Nome Impresso no Cartão</label>
+                            <input type="text" id="card-name" placeholder="NOME COMO ESTÁ NO CARTÃO">
+                        </div>
+                        <div class="form-group">
+                            <label for="card-number">Número do Cartão</label>
+                            <input type="text" id="card-number" maxlength="19" placeholder="0000 0000 0000 0000">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div class="form-group">
+                                <label for="card-expiry">Validade</label>
+                                <input type="text" id="card-expiry" maxlength="5" placeholder="MM/AA">
+                            </div>
+                            <div class="form-group">
+                                <label for="card-cvv">CVV</label>
+                                <input type="text" id="card-cvv" maxlength="4" placeholder="123">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-installments">Opções de Parcelamento</label>
+                            <select id="card-installments" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; color: #1e293b; background: #f8fafc;">
+                                <option value="1">À vista (sem juros)</option>
+                                <option value="2">2x sem juros</option>
+                                <option value="3">3x sem juros</option>
+                                <option value="4">4x com juros estáveis de 1.99% a.m.</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="area-boleto" class="metodo-secao" style="display: none;">
+                        <div style="text-align: center; padding: 1rem 0;">
+                            <p style="color: #475569; font-size: 0.95rem; line-height: 1.5;">O código do boleto bancário será emitido na próxima tela. O prazo de compensação é de <strong>1 a 2 dias úteis</strong>.</p>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-buy" style="width: 100%; margin-top: 1.5rem;">Confirmar e Pagar</button>
+                </form>
+            </div>
+
+            <div class="contact-form" style="max-width: 100%; margin: 0; background: rgba(255,255,255,0.6);">
+                <h3 style="margin-bottom: 1.5rem; color: #0f172a;">Resumo do Pedido</h3>
+                <div id="resumo-itens-pagamento" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem;"></div>
+                <div style="border-top: 1px solid #cbd5e1; padding-top: 1rem; font-size: 1.2rem; font-weight: 700; text-align: right;">
+                    Total: <span id="total-pagamento" style="color: #4f46e5;">R$ 0,00</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 DevShop - Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        window.onload = function() {
+            carregarResumoPagamento();
+        };
+    </script>
+</body>
+</html>

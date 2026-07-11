@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevShop - Histórico de Compras</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">DevShop</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="carrinho.html">Carrinho 🛒</a></li>
+                    <li><a href="historico.html" class="active">Meus Pedidos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container content">
+        <h2 class="section-title">Histórico de Compras</h2>
+        
+        <div id="historico-container" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;"></div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 DevShop - Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        window.onload = function() {
+            renderizarHistorico();
+        };
+    </script>
+</body>
+</html>
