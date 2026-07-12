@@ -198,6 +198,24 @@ body {
     background: #4338ca;
 }
 
+/* Estilos para a lista de itens do carrinho responsivo */
+.cart-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 15px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.cart-item-left, .cart-item-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 /* ==========================================
    SISTEMA DE MODAL DETALHADO DO PRODUTO
    ========================================== */
@@ -421,4 +439,9 @@ body {
     .modal-body { grid-template-columns: 1fr; gap: 20px; }
     .main-img-container { height: 240px; }
     .footer-container { flex-direction: column; gap: 2rem; }
+    
+    /* Regras extras de responsividade para carrinho e histórico */
+    .cart-card { flex-direction: column; align-items: stretch; text-align: center; }
+    .cart-item-left { flex-direction: column; }
+    .cart-item-right { justify-content: space-between; width: 100%; }
 }

@@ -69,7 +69,7 @@ const productDatabase = {
         images: [
             "https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=600&q=80",
             "https://images.unsplash.com/photo-1580481072645-022f9a6dbf27?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1688578735322-8dfdfb36a0fb?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=600&q=80", // Imagem corrigida
             "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=600&q=80"
         ]
     }
@@ -79,7 +79,7 @@ const productDatabase = {
 function mostrarNotificacao(mensagem) {
     const toast = document.createElement('div');
     toast.className = 'toast-notification';
-    toast.innerText = mensagem;
+    toast.innerText = message = mensagem;
 
     document.body.appendChild(toast);
 
@@ -129,7 +129,7 @@ function processarPagamento(event) {
     if (carrinho.length === 0) return;
 
     const historico = JSON.parse(localStorage.getItem('devshop_historico')) || [];
-    const metodoSelecionado = document.querySelector('input[name=\"metodo_pagamento\"]:checked').value;
+    const metodoSelecionado = document.querySelector('input[name="metodo_pagamento"]:checked').value;
     
     let total = 0;
     carrinho.forEach(item => total += item.preco * item.quantidade);
@@ -192,20 +192,22 @@ document.addEventListener("DOMContentLoaded", () => {
         if (historico.length === 0) {
             historicoContainer.innerHTML = `<p style="text-align:center; color:#64748b;">Nenhum pedido encontrado.</p>`;
         } else {
+            historicoContainer.innerHTML = ''; // Limpa conteúdo prévio
             historico.forEach(pedido => {
                 let itensHTML = '';
                 pedido.itens.forEach(item => {
                     itensHTML += `<p style="font-size:0.95rem; margin:4px 0;">• ${item.nome} (x${item.quantidade}) - R$ ${(item.preco * item.quantidade).toFixed(2)}</p>`;
                 });
 
+                // Removido flex-direction fixo via inline style para herdar o comportamento responsivo da classe .cart-card customizada
                 historicoContainer.innerHTML += `
-                    <div class="product-card" style="padding: 20px; flex-direction: column; gap:10px;">
-                        <div style="display:flex; justify-content:space-between; border-bottom:1px solid #cbd5e1; padding-bottom:8px; flex-wrap:wrap;">
+                    <div class="product-card cart-card" style="padding: 20px; gap:10px;">
+                        <div style="display:flex; justify-content:space-between; border-bottom:1px solid #cbd5e1; padding-bottom:8px; flex-wrap:wrap; width: 100%;">
                             <strong>Pedido #${pedido.id}</strong>
                             <span style="color:#64748b; font-size:0.9rem;">${pedido.data}</span>
                         </div>
-                        <div>${itensHTML}</div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; flex-wrap:wrap; gap:10px;">
+                        <div style="width: 100%;">${itensHTML}</div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; flex-wrap:wrap; gap:10px; width: 100%;">
                             <div>Total: <strong style="color:#4f46e5; font-size:1.2rem;">R$ ${pedido.total.toFixed(2)}</strong> <small style="color:#64748b;">(${pedido.metodo.toUpperCase()})</small></div>
                             <span style="background:#dcfce7; color:#15803d; padding:4px 12px; border-radius:20px; font-size:0.85rem; font-weight:600;">Pedido Entregue</span>
                         </div>
@@ -272,16 +274,17 @@ function renderizarCarrinho() {
 
     carrinho.forEach((item, index) => {
         total += item.preco * item.quantidade;
+        // Substituído estilos fixos inline para usar a classe CSS .cart-card, garantindo a quebra de linha em telas pequenas
         container.innerHTML += `
-            <div class="product-card" style="display:flex; flex-direction:row; align-items:center; padding:15px; margin-bottom:15px; justify-content:space-between; flex-wrap:wrap; gap:15px;">
-                <div style="display:flex; align-items:center; gap:15px;">
+            <div class="product-card cart-card">
+                <div class="cart-item-left">
                     <img src="${item.img}" style="width:70px; height:70px; object-fit:cover; border-radius:8px;">
                     <div>
                         <h4 style="margin:0 0 5px 0;">${item.nome}</h4>
                         <span style="color:#64748b; font-size:0.9rem;">R$ ${item.preco.toFixed(2)}</span>
                     </div>
                 </div>
-                <div style="display:flex; align-items:center; gap:15px;">
+                <div class="cart-item-right">
                     <div style="display:flex; align-items:center; background:#f1f5f9; border-radius:8px; padding:2px;">
                         <button onclick="alterarQuantidade(${index}, -1)" style="border:none; background:none; padding:5px 10px; cursor:pointer; font-weight:bold;">-</button>
                         <span style="padding:0 10px;">${item.quantidade}</span>
