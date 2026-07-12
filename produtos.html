@@ -3,76 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos | DevShop</title>
+    <title>DevShop - Produtos</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="nav-container">
-            <div class="logo">DevShop</div>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">DevShop</a>
             <nav>
-                <a href="index.html">Início</a>
-                <a href="produtos.html" class="active">Produtos</a>
-                <a href="contato.html">Contato</a>
-                <a href="carrinho.html">Carrinho</a>
-                <a href="historico.html">Meus Pedidos</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="produtos.html" class="active">Produtos</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="carrinho.html">Carrinho 🛒</a></li>
+                    <li><a href="historico.html">Meus Pedidos</a></li>
+                </ul>
             </nav>
         </div>
     </header>
 
-    <main class="container">
-        <h2 class="section-title">Todos os Produtos</h2>
+    <main class="container content">
+        <h2 class="section-title">Nosso Catálogo Completo</h2>
         
-        <div class="products-grid">
+        <div class="product-grid">
             <div class="product-card">
                 <div class="badge-discount">ÚLTIMAS UNIDADES</div>
-                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500" alt="Smartphone Alpha" class="product-img">
+                <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80" alt="Smartphone Alpha" class="product-img">
                 <div class="product-info">
-                    <h3>Smartphone Alpha</h3>
-                    <p class="description">Processador octa-core de última geração, 128GB de armazenamento.</p>
+                    <h3 class="product-name">Smartphone Alpha</h3>
+                    <p class="product-desc">Processador octa-core de última geração, 128GB de armazenamento e câmara quádrupla com IA.</p>
                     <div class="price-box">
                         <span class="old-price">R$ 2.799,00</span>
                         <span class="current-price">R$ 1.999,00</span>
                     </div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Smartphone Alpha', 1999.00)">Adicionar ao Carrinho</button>
+                    <button class="btn-buy" onclick="adicionarAoCarrinho('Smartphone Alpha', 1999.00, 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80')">Adicionar ao Carrinho</button>
                 </div>
             </div>
 
             <div class="product-card">
-                <div class="badge-discount">30% OFF</div>
-                <img src="https://images.unsplash.com/photo-1496181130204-755241524eab?w=500" alt="Notebook Pro Work" class="product-img">
+                <div class="badge-discount">OFERTA RESTRITA</div>
+                <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=600&q=80" alt="Teclado Mecânico RGB" class="product-img">
                 <div class="product-info">
-                    <h3>Notebook Pro Work</h3>
-                    <p class="description">Tela de 15.6" Full HD, 16GB de memória RAM e SSD de 512GB.</p>
-                    <div class="price-box">
-                        <span class="old-price">R$ 5.999,00</span>
-                        <span class="current-price">R$ 4.299,00</span>
-                    </div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Notebook Pro Work', 4299.00)">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="badge-discount">OFERTA DO DIA</div>
-                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Fone de Ouvido Bluetooth" class="product-img">
-                <div class="product-info">
-                    <h3>Fone de Ouvido Bluetooth</h3>
-                    <p class="description">Cancelamento de ruído ativo inteligente e som de alta fidelidade.</p>
+                    <h3 class="product-name">Teclado Mecânico RGB</h3>
+                    <p class="product-desc">Switches lineares silenciosos, iluminação customizável por tecla e acabamento mecânico premium.</p>
                     <div class="price-box">
                         <span class="old-price">R$ 499,00</span>
-                        <span class="current-price">R$ 299,00</span>
+                        <span class="current-price">R$ 349,90</span>
                     </div>
-                    <button class="btn-add" onclick="adicionarAoCarrinho('Fone de Ouvido Bluetooth', 299.00)">Adicionar ao Carrinho</button>
+                    <button class="btn-buy" onclick="adicionarAoCarrinho('Teclado Mecânico RGB', 349.90, 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=600&q=80')">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="badge-discount">40% DE DESCONTO</div>
+                <img src="https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=600&q=80" alt="Cadeira Ergonômica Pro" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-name">Cadeira Ergonômica Pro</h3>
+                    <p class="product-desc">Suporte lombar totalmente ajustável, braços articulados e inclinação relaxante.</p>
+                    <div class="price-box">
+                        <span class="old-price">R$ 1.499,00</span>
+                        <span class="current-price">R$ 989,90</span>
+                    </div>
+                    <button class="btn-buy" onclick="adicionarAoCarrinho('Cadeira Ergonômica Pro', 989.90, 'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=600&q=80')">Adicionar ao Carrinho</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer>
-        <div class="footer-bottom">
-            <p>&copy; 2026 DevShop - Todos os direitos reservados.</p>
-        </div>
-    </footer>
     <script src="script.js"></script>
 </body>
 </html>

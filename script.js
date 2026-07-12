@@ -1,11 +1,11 @@
 // Inicializa o carrinho buscando dados salvos no LocalStorage ou cria uma lista vazia
 let carrinho = JSON.parse(localStorage.getItem('devshop_carrinho')) || [];
 
-// Sistema de Notificação Toast não bloqueante (Substituição de alert)
+// Sistema de Notificação Toast não bloqueante
 function mostrarNotificacao(mensagem) {
     const toast = document.createElement('div');
     toast.className = 'toast-notification';
-    toast.innerText = mensagem;
+    toast.innerText = mensaje || mensagem;
 
     document.body.appendChild(toast);
 
@@ -21,205 +21,201 @@ function mostrarNotificacao(mensagem) {
     }, 3000);
 }
 
-// Alterna a exibição visual dos campos do formulário de pagamento com base na escolha
-function alternarMetodoPagamento(metodo) {
-    document.getElementById('area-pix').style.display = 'none';
-    document.getElementById('area-cartao').style.display = 'none';
-    document.getElementById('area-boleto').style.display = 'none';
-
-    const inputsCartao = document.querySelectorAll('#area-cartao input');
-    inputsCartao.forEach(input => input.removeAttribute('required'));
-
-    if (metodo === 'pix') {
-        document.getElementById('area-pix').style.display = 'block';
-    } else if (metodo === 'cartao') {
-        document.getElementById('area-cartao').style.display = 'block';
-        inputsCartao.forEach(input => input.setAttribute('required', 'true'));
-    } else if (metodo === 'boleto') {
-        document.getElementById('area-boleto').style.display = 'block';
-    }
-}
-
-// Adiciona um item ao carrinho
-function adicionarAoCarrinho(nome, preco, imagem) {
+// Adiciona um item ao carrinho preservando os parâmetros dinâmicos
+function adicionarAoCarrinho(nome, preco, img) {
     const itemExistente = carrinho.find(item => item.nome === nome);
 
     if (itemExistente) {
         itemExistente.quantidade += 1;
     } else {
-        carrinho.push({
-            nome: nome,
-            preco: preco,
-            imagem: imagem,
-            quantidade: 1
-        });
+        carrinho.push({ nome, preco, img, quantidade: 1 });
     }
 
     localStorage.setItem('devshop_carrinho', JSON.stringify(carrinho));
     mostrarNotificacao(`${nome} adicionado ao carrinho!`);
-}
-
-// Redireciona o usuário do carrinho para a página de pagamento
-function finalizarCompra() {
-    if (carrinho.length === 0) {
-        mostrarNotificacao('Seu carrinho está vazio!');
-        return;
+    if (window.location.pathname.includes('carrinho.html')) {
+        renderizarCarrinho();
     }
-    window.location.href = 'pagamento.html';
 }
 
-// Renderiza os itens na página de carrinho.html
+// Alterna a exibição visual dos campos na tela de pagamento
+function alternarMetodoPagamento(metodo) {
+    document.getElementById('area-pix').style.display = 'none';
+    document.getElementById('area-cartao').style.display = 'none';
+    document.getElementById('area-boleto').style.display = 'none';
+
+    if (metodo === 'pix') {
+        document.getElementById('area-pix').style.display = 'block';
+    } else if (metodo === 'cartao') {
+        document.getElementById('area-cartao').style.display = 'block';
+    } else if (metodo === 'boleto') {
+        document.getElementById('area-boleto').style.display = 'block';
+    }
+}
+
+// Renderização dinâmica dos itens na aba carrinho.html
 function renderizarCarrinho() {
     const container = document.getElementById('carrinho-container');
     const totalElemento = document.getElementById('carrinho-total');
-    if (!container || !totalElemento) return;
+
+    if (!container) return;
 
     if (carrinho.length === 0) {
-        container.innerHTML = '<p style="text-align:center; padding: 2rem; color: #64748b;">Seu carrinho está vazio.</p>';
-        totalElemento.innerText = 'R$ 0,00';
+        container.innerHTML = '<p style="text-align: center; color: #64748b; padding: 2rem 0;">Seu carrinho está vazio.</p>';
+        if (totalElemento) totalElemento.innerText = 'R$ 0,00';
         return;
     }
 
     container.innerHTML = '';
-    let totalGeral = 0;
+    let total = 0;
 
     carrinho.forEach((item, index) => {
-        const subtotal = item.preco * item.quantidade;
-        totalGeral += subtotal;
-
+        total += item.preco * item.quantidade;
         container.innerHTML += `
-            <div class="contact-form" style="max-width: 100%; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <img src="${item.imagem}" alt="${item.nome}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
-                    <div>
-                        <h4 style="margin: 0; color: #0f172a;">${item.nome}</h4>
-                        <p style="margin: 5px 0 0 0; color: #64748b; font-size: 0.9rem;">R$ ${item.preco.toFixed(2).replace('.', ',')} cada</p>
-                    </div>
+            <div class="cart-item">
+                <img src="${item.img || 'https://via.placeholder.com/70'}" alt="${item.nome}">
+                <div class="cart-item-info">
+                    <h4 style="margin-bottom: 4px; color:#0f172a;">${item.nome}</h4>
+                    <span style="color:#4f46e5; font-weight:700;">R$ ${item.preco.toFixed(2).replace('.', ',')}</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <span style="font-size: 0.95rem;">Qtd: <strong>${item.quantidade}</strong></span>
-                    <span style="font-weight: 600; color: #0f172a;">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
-                    <button onclick="removerDoCarrinho(${index})" style="background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Remover</button>
+                <div class="cart-item-actions">
+                    <button class="btn-qty" onclick="alterarQuantidade(${index}, -1)">-</button>
+                    <span style="font-weight: 600;">${item.quantidade}</span>
+                    <button class="btn-qty" onclick="alterarQuantidade(${index}, 1)">+</button>
+                    <button class="btn-remove" onclick="removerItem(${index})" style="margin-left: 10px;">🗑️</button>
                 </div>
             </div>
         `;
     });
 
-    totalElemento.innerText = `R$ ${totalGeral.toFixed(2).replace('.', ',')}`;
+    if (totalElemento) totalElemento.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
 }
 
-// Remove um item específico do carrinho
-function removerDoCarrinho(index) {
+function alterarQuantidade(index, valor) {
+    carrinho[index].quantidade += valor;
+    if (carrinho[index].quantidade <= 0) {
+        carrinho.splice(index, 1);
+    }
+    localStorage.setItem('devshop_carrinho', JSON.stringify(carrinho));
+    renderizarCarrinho();
+}
+
+function removerItem(index) {
     carrinho.splice(index, 1);
     localStorage.setItem('devshop_carrinho', JSON.stringify(carrinho));
     renderizarCarrinho();
 }
 
-// Carrega os dados na tela de pagamento lateral (pagamento.html)
-function carregarResumoPagamento() {
-    const container = document.getElementById('resumo-itens-pagamento');
-    const totalElemento = document.getElementById('total-pagamento');
-    if (!container || !totalElemento) return;
-
-    container.innerHTML = '';
-    let totalGeral = 0;
-
-    carrinho.forEach(item => {
-        const subtotal = item.preco * item.quantidade;
-        totalGeral += subtotal;
-        container.innerHTML += `
-            <div style="display: flex; justify-content: space-between; font-size: 0.95rem;">
-                <span>${item.quantidade}x ${item.nome}</span>
-                <span style="font-weight:600;">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
-            </div>
-        `;
-    });
-
-    totalElemento.innerText = `R$ ${totalGeral.toFixed(2).replace('.', ',')}`;
-}
-
-// Salva a compra concluída no Histórico, identificando a opção de pagamento escolhida
-function processarPagamentoSimulado(event) {
-    event.preventDefault();
-
+function finalizarCompra() {
     if (carrinho.length === 0) {
-        mostrarNotificacao("Erro: Seu carrinho está vazio!");
-        setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+        mostrarNotificacao('Adicione itens ao carrinho primeiro!');
         return;
     }
+    window.location.href = 'pagamento.html';
+}
 
-    const metodoSelecionado = document.querySelector('input[name="forma-pagamento"]:checked').value;
-    let totalCalculado = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
-    
-    if (metodoSelecionado === 'pix') {
-        totalCalculado = totalCalculado * 0.95; // Aplica o desconto de 5% estruturado
+// Lógica de Execução ao carregar as Telas de Pagamento ou Histórico
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.location.pathname.includes('carrinho.html')) {
+        renderizarCarrinho();
     }
 
-    let historico = JSON.parse(localStorage.getItem('devshop_historico')) || [];
+    if (window.location.pathname.includes('pagamento.html')) {
+        const resumoContainer = document.getElementById('resumo-itens-pagamento');
+        const totalPagamento = document.getElementById('total-pagamento');
+
+        if (resumoContainer) {
+            let total = 0;
+            resumoContainer.innerHTML = '';
+            carrinho.forEach(item => {
+                total += item.preco * item.quantidade;
+                resumoContainer.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; font-size: 0.95rem; color: #475569;">
+                        <span>${item.quantidade}x ${item.nome}</span>
+                        <strong>R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}</strong>
+                    </div>
+                `;
+            });
+            if (totalPagamento) totalPagamento.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+    }
+
+    if (window.location.pathname.includes('historico.html')) {
+        const container = document.getElementById('historico-container');
+        const historico = JSON.parse(localStorage.getItem('devshop_historico')) || [];
+
+        if (!container) return;
+
+        if (historico.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: #64748b;">Você ainda não realizou nenhum pedido.</p>';
+        } else {
+            container.innerHTML = '';
+            historico.forEach(pedido => {
+                let itensHTML = '';
+                pedido.itens.forEach(item => {
+                    itensHTML += `<li>${item.quantidade}x ${item.nome} - R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}</li>`;
+                });
+
+                const labelMetodo = pedido.metodo || 'CARTÃO';
+                const codigoRastreioFicticio = `BR${pedido.id}824CN`;
+
+                container.innerHTML += `
+                    <div class="contact-form" style="max-width: 100%; margin: 0; border-left: 5px solid #4f46e5; background: #fff; padding: 20px;">
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 1rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">
+                            <strong>Pedido: #${pedido.id} (${labelMetodo})</strong>
+                            <span style="color: #64748b; font-size: 0.9rem;">${pedido.data}</span>
+                        </div>
+                        <ul style="list-style-position: inside; color: #475569; margin-bottom: 1rem; display:flex; flex-direction:column; gap:5px; padding-left: 0;">
+                            ${itensHTML}
+                        </ul>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-top: 1px solid #e2e8f0; padding-top: 10px;">
+                            <div class="tracking-box">
+                                <span style="color: #16a34a; font-weight: bold;">Status: ✓ Processado (A caminho)</span>
+                                <span class="tracking-code" style="font-size: 0.9rem;">Código de Rastreio: <strong class="code-highlight">${codigoRastreioFicticio}</strong></span>
+                            </div>
+                            <div style="text-align: right; font-weight: 700; font-size: 1.1rem;">
+                                Total: <span style="color: #4f46e5;">R$ ${pedido.total.toFixed(2).replace('.', ',')}</span>
+                            </div>
+                        </div>
+                        <div class="tracking-action">
+                            <a href="https://rastreamento.correios.com.br" target="_blank" class="btn-track">Acompanhar nos Correios</a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    }
+});
+
+// Processamento final da compra e armazenamento no histórico local
+function processarPagamento(event) {
+    event.preventDefault();
+    if (carrinho.length === 0) return;
+
+    const historico = JSON.parse(localStorage.getItem('devshop_historico')) || [];
+    const metodoSelecionado = document.querySelector('input[name="metodo_pagamento"]:checked').value;
+    
+    let total = 0;
+    carrinho.forEach(item => total += item.preco * item.quantidade);
 
     const novoPedido = {
         id: Math.floor(100000 + Math.random() * 900000),
         data: new Date().toLocaleDateString('pt-BR') + ' às ' + new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}),
         itens: [...carrinho],
-        total: totalCalculado,
-        metodo: metodoSelecionado.toUpperCase()
+        total: total,
+        metodo: metodoSelecionado
     };
 
     historico.unshift(novoPedido);
     localStorage.setItem('devshop_historico', JSON.stringify(historico));
-
+    
+    // Limpa o carrinho após a transação concluída
     carrinho = [];
     localStorage.removeItem('devshop_carrinho');
 
-    if (metodoSelecionado === 'pix') {
-        mostrarNotificacao('Chave Pix copiada com sucesso! Aguardando confirmação...');
-    } else if (metodoSelecionado === 'boleto') {
-        mostrarNotificacao('Boleto Emitido! Código enviado ao e-mail.');
-    } else {
-        mostrarNotificacao('Transação Aprovada na operadora do cartão!');
-    }
-    
+    mostrarNotificacao('Pagamento Processado com Sucesso!');
     setTimeout(() => {
         window.location.href = 'historico.html';
-    }, 2000);
-}
-
-// Renderiza a lista de recibos na página historico.html
-function renderizarHistorico() {
-    const container = document.getElementById('historico-container');
-    if (!container) return;
-
-    let historico = JSON.parse(localStorage.getItem('devshop_historico')) || [];
-
-    if (historico.length === 0) {
-        container.innerHTML = '<p style="text-align:center; padding: 2rem; color: #64748b;">Você ainda não realizou nenhuma compra.</p>';
-        return;
-    }
-
-    container.innerHTML = '';
-
-    historico.forEach(pedido => {
-        let itensHTML = '';
-        pedido.itens.forEach(item => {
-            itensHTML += `<li>${item.quantidade}x ${item.nome} - R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}</li>`;
-        });
-
-        const labelMetodo = pedido.metodo || 'CARTÃO';
-
-        container.innerHTML += `
-            <div class="contact-form" style="max-width: 100%; margin: 0; border-left: 5px solid #25d366; background: #fff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 1rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">
-                    <strong>Pedido: #${pedido.id} (${labelMetodo})</strong>
-                    <span style="color: #64748b; font-size: 0.9rem;">${pedido.data}</span>
-                </div>
-                <ul style="list-style-position: inside; color: #475569; margin-bottom: 1rem; display:flex; flex-direction:column; gap:5px; padding-left: 0;">
-                    ${itensHTML}
-                </ul>
-                <div style="text-align: right; font-weight: 700; font-size: 1.1rem; color: #0f172a;">
-                    Status: <span style="color: #25d366; margin-right: 15px;">✔ Processado</span>
-                    Total: <span style="color: #4f46e5;">R$ ${pedido.total.toFixed(2).replace('.', ',')}</span>
-                </div>
-            </div>
-        `;
-    });
+    }, 1500);
 }

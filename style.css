@@ -1,4 +1,6 @@
-/* Reset básico */
+/* ==========================================
+   RESET & CONFIGURAÇÕES GERAIS
+   ========================================== */
 * {
     margin: 0;
     padding: 0;
@@ -21,7 +23,14 @@ body {
     margin: 0 auto;
 }
 
-/* Navbar Fluida */
+.content {
+    flex: 1;
+    padding: 3rem 0;
+}
+
+/* ==========================================
+   NAVBAR (MENU SUPERIOR)
+   ========================================== */
 .navbar {
     background: rgba(15, 23, 42, 0.95);
     backdrop-filter: blur(10px);
@@ -42,64 +51,47 @@ body {
 .logo {
     font-size: 1.6rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #38bdf8, #818cf8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fff;
     text-decoration: none;
     letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .nav-links {
-    list-style: none;
     display: flex;
-    gap: 1.8rem;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
 }
 
 .nav-links a {
     color: #cbd5e1;
     text-decoration: none;
-    font-size: 1rem;
     font-weight: 500;
-    transition: all 0.3s ease;
-    padding: 0.5rem 0;
-    position: relative;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
 }
 
 .nav-links a:hover, .nav-links a.active {
     color: #fff;
+    background: rgba(255, 255, 255, 0.1);
 }
 
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #4f46e5;
-    transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after, .nav-links a.active::after {
-    width: 100%;
-}
-
-/* Conteúdo Principal */
-.content {
-    flex: 1;
-    padding: 3rem 0;
-}
-
+/* ==========================================
+   CATÁLOGO DE PRODUTOS & CARDS
+   ========================================== */
 .section-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 800;
+    margin-bottom: 2rem;
     color: #0f172a;
-    margin-bottom: 2.5rem;
     position: relative;
-    letter-spacing: -0.5px;
 }
 
-/* Grid de Produtos */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -110,21 +102,22 @@ body {
     background: #fff;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
+    position: relative;
     border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 20px 30px rgba(79, 70, 229, 0.1);
 }
 
 .product-img {
     width: 100%;
-    height: 220px;
+    height: 240px;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
@@ -141,172 +134,274 @@ body {
 }
 
 .product-name {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #0f172a;
     margin-bottom: 0.5rem;
 }
 
 .product-desc {
+    font-size: 0.9rem;
     color: #64748b;
-    font-size: 0.95rem;
     line-height: 1.5;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     flex: 1;
 }
 
-.product-price {
-    font-size: 1.5rem;
+/* Elementos Visuais do Dropshipping */
+.badge-discount {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #ef4444;
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 6px;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
+}
+
+.price-box {
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.old-price {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-decoration: line-through;
+}
+
+.current-price {
+    font-size: 1.4rem;
     font-weight: 800;
     color: #4f46e5;
-    margin-bottom: 1rem;
+}
+
+.shipping-badge {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 0.75rem;
+    color: #16a34a;
+    background: rgba(22, 163, 74, 0.1);
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-bottom: 1.2rem;
+    font-weight: 600;
 }
 
 .btn-buy {
     background: #4f46e5;
     color: #fff;
     border: none;
-    padding: 0.85rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
     font-weight: 600;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
+    width: 100%;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    text-decoration: none;
 }
 
 .btn-buy:hover {
     background: #4338ca;
-    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.45);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
 }
 
-/* Formulário de Contato e Recibos */
+/* ==========================================
+   SISTEMA DO CARRINHO DE COMPRAS
+   ========================================== */
+.cart-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.cart-item img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-qty {
+    background: #e2e8f0;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-remove {
+    background: #fee2e2;
+    color: #ef4444;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cart-resume {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+/* ==========================================
+   PÁGINA DE PAGAMENTO & FORMULÁRIOS
+   ========================================== */
+.payment-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    align-items: start;
+}
+
 .contact-form {
     background: #fff;
-    padding: 2.5rem;
+    padding: 2rem;
     border-radius: 16px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-    max-width: 600px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+    width: 100%;
     margin: 0 auto;
-    border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .form-group label {
     display: block;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #334155;
     margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
 }
 
-.form-group input, .form-group textarea {
+.form-group input, .form-group textarea, .form-group select {
     width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
-    font-size: 1rem;
-    color: #1e293b;
-    transition: all 0.2s ease;
-    background: #f8fafc;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
 }
 
 .form-group input:focus, .form-group textarea:focus {
-    outline: none;
     border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-    background: #fff;
 }
 
-/* Resumo do Carrinho */
-.cart-resume {
-    margin-top: 2.5rem;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+/* Seleção Dinâmica de Pagamento */
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.method-option { cursor: pointer; }
+.method-option input[type="radio"] { display: none; }
+
+.method-box {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    border: 1px solid rgba(226, 232, 240, 0.8);
-}
-
-.cart-total-box {
-    font-size: 1.3rem;
-    color: #334155;
-    margin-bottom: 0.5rem;
-}
-
-.cart-total-box strong {
-    font-size: 1.8rem;
-    color: #4f46e5;
-    font-weight: 800;
-    margin-left: 10px;
-}
-
-/* Rodapé */
-.footer {
-    background: #0f172a;
-    color: #94a3b8;
-    text-align: center;
-    padding: 2rem 0;
-    font-size: 0.95rem;
-    border-top: 1px solid #1e293b;
-    margin-top: auto;
-}
-
-/* --- BOTÃO FLUTUANTE DO WHATSAPP --- */
-.whatsapp-float {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #25d366;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    transition: all 0.3s ease;
+    padding: 1rem;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.method-icon { font-size: 1.4rem; margin-bottom: 4px; }
+.method-option input[type="radio"]:checked + .method-box {
+    border-color: #4f46e5;
+    background: rgba(79, 70, 229, 0.04);
+    color: #4f46e5;
+}
+
+/* ==========================================
+   HISTÓRICO E RASTREIO DE ENVIOS
+   ========================================== */
+.tracking-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.code-highlight {
+    color: #b45309;
+    background: #fef3c7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.tracking-action {
+    margin-top: 12px;
+}
+
+.btn-track {
+    display: inline-block;
+    background: #16a34a;
+    color: white;
+    padding: 6px 14px;
     text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: background 0.2s;
 }
 
-.whatsapp-float:hover {
-    transform: scale(1.1);
-    background-color: #20ba5a;
-}
+.btn-track:hover { background: #15803d; }
 
-.whatsapp-float svg {
-    width: 30px;
-    height: 30px;
-    fill: white;
-}
-
-/* --- NOTIFICAÇÃO TOAST FLUIDA --- */
+/* ==========================================
+   NOTIFICAÇÕES TOAST
+   ========================================== */
 .toast-notification {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(10px);
+    background: #0f172a;
     color: #fff;
     padding: 1rem 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    font-weight: 500;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     z-index: 1000;
-    pointer-events: none;
     transform: translateY(100px);
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
 }
 
 .toast-notification.show {
@@ -314,163 +409,74 @@ body {
     opacity: 1;
 }
 
-/* --- INTERFACE MODERNA DE OPÇÕES DE PAGAMENTO --- */
-.payment-methods-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 2rem;
+/* ==========================================
+   RODAPÉ INSTITUCIONAL (CONFIANÇA)
+   ========================================== */
+.footer {
+    background: #0f172a;
+    color: #94a3b8;
+    margin-top: auto;
+    border-top: 1px solid #1e293b;
 }
 
-.method-option {
-    cursor: pointer;
-}
-
-.method-option input[type="radio"] {
-    display: none;
-}
-
-.method-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    background: #f8fafc;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    font-weight: 600;
-    color: #475569;
-    transition: all 0.25s ease;
-    text-align: center;
-}
-
-.method-icon {
-    font-size: 1.5rem;
-    margin-bottom: 4px;
-}
-
-.method-option input[type="radio"]:checked + .method-box {
-    border-color: #4f46e5;
-    background: rgba(79, 70, 229, 0.04);
-    color: #4f46e5;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
-}
-
-.metodo-secao {
-    animation: fadeInSecao 0.3s ease-out;
-}
-
-@keyframes fadeInSecao {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsividade Geral */
-@media (max-width: 640px) {
-    .navbar .container {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    .nav-links {
-        gap: 1.2rem;
-    }
-    .section-title {
-        font-size: 1.8rem;
-        text-align: center;
-    }
-    .contact-form {
-        padding: 1.5rem;
-    }
-    .payment-methods-grid {
-        grid-template-columns: 1fr;
-    }
-/* Customizações para Dropshipping Profissional */
-.badge-discount {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: #ff3838;
-    color: #fff;
-    padding: 5px 10px;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 4px;
-    z-index: 2;
-}
-.product-card { position: relative; } /* Garante o alinhamento da badge */
-
-.price-box {
-    margin: 10px 0;
-    display: flex;
-    flex-direction: column;
-}
-.old-price {
-    font-size: 13px;
-    color: #888;
-    text-decoration: line-through;
-}
-.current-price {
-    font-size: 20px;
-    font-weight: bold;
-    color: #a29bfe; /* Mantendo seu padrão roxo/azul */
-}
-.shipping-badge {
-    display: inline-block;
-    font-size: 12px;
-    color: #2ed573;
-    background: rgba(46, 213, 115, 0.1);
-    padding: 3px 8px;
-    border-radius: 20px;
-    margin-bottom: 10px;
-}
-
-/* Caixa de Rastreamento no Histórico */
-.tracking-box {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-.code-highlight {
-    color: #eccc68;
-    background: rgba(236, 204, 104, 0.1);
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-.tracking-action {
-    margin-top: 15px;
-    text-align: left;
-}
-.btn-track {
-    display: inline-block;
-    background: #2ed573;
-    color: white;
-    padding: 8px 15px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 14px;
-    transition: background 0.2s;
-}
-.btn-track:hover { background: #26af5c; }
-
-/* Estrutura do Rodapé */
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 40px 20px;
-    gap: 20px;
+    padding: 3rem 1.5rem;
+    gap: 2.5rem;
 }
+
+.footer-links h4, .footer-trust h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
 .footer-links a {
     display: block;
-    color: #bbb;
+    color: #cbd5e1;
     text-decoration: none;
     margin: 8px 0;
-    font-size: 14px;
+    font-size: 0.9rem;
+    transition: color 0.2s;
 }
+
 .footer-links a:hover { color: #fff; }
-.footer-trust p { font-size: 14px; color: #ccc; margin: 5px 0; }
+.footer-trust p { font-size: 0.9rem; margin: 6px 0; }
+.footer-bottom {
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 1px solid #1e293b;
+    font-size: 0.85rem;
+}
+
+/* Botão Flutuante do WhatsApp */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 20px;
+    left: 20px;
+    background-color: #25d366;
+    color: #fff;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+}
+
+.whatsapp-float svg { fill: #fff; width: 100%; height: 100%; }
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .navbar .container { flex-direction: column; gap: 1rem; }
+    .footer-container { flex-direction: column; gap: 1.5rem; }
 }

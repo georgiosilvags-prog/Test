@@ -27,79 +27,61 @@
     <main class="container content">
         <h2 class="section-title">Finalizar Pagamento</h2>
         
-        <div class="payment-layout" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start;">
-            
-            <div class="contact-form" style="max-width: 100%; margin: 0;">
-                <h3 style="margin-bottom: 1.5rem; color: #0f172a;">Selecione a Forma de Pagamento</h3>
-                
-                <div class="payment-methods-grid">
-                    <label class="method-option">
-                        <input type="radio" name="forma-pagamento" value="pix" checked onchange="alternarMetodoPagamento('pix')">
-                        <div class="method-box">
-                            <span class="method-icon">⚡</span>
-                            <span>Pix</span>
-                        </div>
-                    </label>
-                    <label class="method-option">
-                        <input type="radio" name="forma-pagamento" value="cartao" onchange="alternarMetodoPagamento('cartao')">
-                        <div class="method-box">
-                            <span class="method-icon">💳</span>
-                            <span>Cartão</span>
-                        </div>
-                    </label>
-                    <label class="method-option">
-                        <input type="radio" name="forma-pagamento" value="boleto" onchange="alternarMetodoPagamento('boleto')">
-                        <div class="method-box">
-                            <span class="method-icon">📄</span>
-                            <span>Boleto</span>
-                        </div>
-                    </label>
-                </div>
-
-                <form id="form-pagamento-dinamico" onsubmit="processarPagamentoSimulado(event)">
+        <div class="payment-layout">
+            <div class="contact-form">
+                <h3 style="margin-bottom: 1.5rem; color: #0f172a;">Detalhes da Entrega & Pagamento</h3>
+                <form id="form-pagamento" onsubmit="processarPagamento(event)">
                     
-                    <div id="area-pix" class="metodo-secao">
-                        <div style="text-align: center; padding: 1rem 0;">
-                            <p style="margin-bottom: 1rem; color: #475569; font-size: 0.95rem;">Aprovação instantânea! Um QR Code e a chave Copia e Cola serão gerados após clicar no botão.</p>
-                            <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1rem; border-radius: 8px; display: inline-block; color: #0f172a; font-weight: 600;">
-                                Ganhe 5% de desconto pagando via PIX!
+                    <div class="form-group">
+                        <label for="nome-completo">Nome Completo</label>
+                        <input type="text" id="nome-completo" required placeholder="Ex: Maria Silva">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="endereco-entrega">Endereço de Envio Completo</label>
+                        <input type="text" id="endereco-entrega" required placeholder="Rua, número, andar e localidade">
+                    </div>
+
+                    <div class="payment-methods-grid">
+                        <label class="method-option" onclick="alternarMetodoPagamento('cartao')">
+                            <input type="radio" name="metodo_pagamento" value="CARTÃO" checked>
+                            <div class="method-box">
+                                <span class="method-icon">💳</span>
+                                <span>Cartão</span>
                             </div>
+                        </label>
+                        <label class="method-option" onclick="alternarMetodoPagamento('pix')">
+                            <input type="radio" name="metodo_pagamento" value="PIX">
+                            <div class="method-box">
+                                <span class="method-icon">⚡</span>
+                                <span>Pix</span>
+                            </div>
+                        </label>
+                        <label class="method-option" onclick="alternarMetodoPagamento('boleto')">
+                            <input type="radio" name="metodo_pagamento" value="BOLETO">
+                            <div class="method-box">
+                                <span class="method-icon">📄</span>
+                                <span>Boleto</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div id="area-cartao">
+                        <div class="form-group">
+                            <label for="num-cartao">Número do Cartão</label>
+                            <input type="text" id="num-cartao" placeholder="0000 0000 0000 0000">
                         </div>
                     </div>
 
-                    <div id="area-cartao" class="metodo-secao" style="display: none;">
-                        <div class="form-group">
-                            <label for="card-name">Nome Impresso no Cartão</label>
-                            <input type="text" id="card-name" placeholder="NOME COMO ESTÁ NO CARTÃO">
-                        </div>
-                        <div class="form-group">
-                            <label for="card-number">Número do Cartão</label>
-                            <input type="text" id="card-number" maxlength="19" placeholder="0000 0000 0000 0000">
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                            <div class="form-group">
-                                <label for="card-expiry">Validade</label>
-                                <input type="text" id="card-expiry" maxlength="5" placeholder="MM/AA">
-                            </div>
-                            <div class="form-group">
-                                <label for="card-cvv">CVV</label>
-                                <input type="text" id="card-cvv" maxlength="4" placeholder="123">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="card-installments">Opções de Parcelamento</label>
-                            <select id="card-installments" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; color: #1e293b; background: #f8fafc;">
-                                <option value="1">À vista (sem juros)</option>
-                                <option value="2">2x sem juros</option>
-                                <option value="3">3x sem juros</option>
-                                <option value="4">4x com juros estáveis de 1.99% a.m.</option>
-                            </select>
+                    <div id="area-pix" style="display: none;">
+                        <div style="text-align: center; padding: 1rem 0;">
+                            <p style="color: #475569; font-size: 0.95rem;">O QR Code Pix será gerado imediatamente após confirmar o pedido.</p>
                         </div>
                     </div>
 
-                    <div id="area-boleto" class="metodo-secao" style="display: none;">
+                    <div id="area-boleto" style="display: none;">
                         <div style="text-align: center; padding: 1rem 0;">
-                            <p style="color: #475569; font-size: 0.95rem; line-height: 1.5;">O código do boleto bancário será emitido na próxima tela. O prazo de compensação é de <strong>1 a 2 dias úteis</strong>.</p>
+                            <p style="color: #475569; font-size: 0.95rem;">Compensação bancária de 1 a 2 dias úteis.</p>
                         </div>
                     </div>
 
@@ -111,22 +93,12 @@
                 <h3 style="margin-bottom: 1.5rem; color: #0f172a;">Resumo do Pedido</h3>
                 <div id="resumo-itens-pagamento" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem;"></div>
                 <div style="border-top: 1px solid #cbd5e1; padding-top: 1rem; font-size: 1.2rem; font-weight: 700; text-align: right;">
-                    Total: <span id="total-pagamento" style="color: #4f46e5;">R$ 0,00</span>
+                    Total: <span id=\"total-pagamento\" style="color: #4f46e5;">R$ 0,00</span>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2026 DevShop - Todos os direitos reservados.</p>
-    </footer>
-
     <script src="script.js"></script>
-    <script>
-        window.onload = function() {
-            carregarResumoPagamento();
-        };
-    </script>
 </body>
 </html>
