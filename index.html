@@ -3,69 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevShop - Home</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <title>DevShop | Eletrônicos & Gadgets Premium</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <header class="navbar">
-        <div class="container">
-            <a href="index.html" class="logo">DevShop</a>
+    <header>
+        <div class="nav-container">
+            <div class="logo">DevShop</div>
             <nav>
-                <ul class="nav-links">
-                    <li><a href="index.html" class="active">Início</a></li>
-                    <li><a href="produtos.html">Produtos</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                    <li><a href="carrinho.html">Carrinho 🛒</a></li>
-                    <li><a href="historico.html">Meus Pedidos</a></li>
-                </ul>
+                <a href="index.html" class="active">Início</a>
+                <a href="produtos.html">Produtos</a>
+                <a href="contato.html">Contato</a>
+                <a href="carrinho.html">Carrinho</a>
+                <a href="historico.html">Meus Pedidos</a>
             </nav>
         </div>
     </header>
 
-    <main class="container content">
+    <main class="container">
         <h2 class="section-title">Nossos Destaques</h2>
         
-        <div class="product-grid">
+        <div class="products-grid">
             <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80" alt="Smartphone Alpha" class="product-img">
+                <div class="badge-discount">ÚLTIMAS UNIDADES</div>
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500" alt="Smartphone Alpha" class="product-img">
                 <div class="product-info">
-                    <h3 class="product-name">Smartphone Alpha</h3>
-                    <p class="product-desc">Processador octa-core de última geração, 128GB de armazenamento e câmera quádrupla com inteligência artificial.</p>
-                    <div class="product-price">R$ 1.999,00</div>
-                    <button class="btn-buy" onclick="adicionarAoCarrinho('Smartphone Alpha', 1999.00, 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80')">Adicionar ao Carrinho</button>
+                    <h3>Smartphone Alpha</h3>
+                    <p class="description">Processador octa-core de última geração, 128GB de armazenamento e câmera quádrupla com IA.</p>
+                    <div class="price-box">
+                        <span class="old-price">R$ 2.799,00</span>
+                        <span class="current-price">R$ 1.999,00</span>
+                    </div>
+                    <span class="shipping-badge">🚚 Frete Grátis</span>
+                    <button class="btn-add" onclick="adicionarAoCarrinho('Smartphone Alpha', 1999.00)">Adicionar ao Carrinho</button>
                 </div>
             </div>
 
             <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80" alt="Notebook Pro Work" class="product-img">
+                <div class="badge-discount">30% OFF</div>
+                <img src="https://images.unsplash.com/photo-1496181130204-755241524eab?w=500" alt="Notebook Pro Work" class="product-img">
                 <div class="product-info">
-                    <h3 class="product-name">Notebook Pro Work</h3>
-                    <p class="product-desc">Tela de 15.6" Full HD, 16GB de memória RAM e SSD de 512GB para máxima velocidade.</p>
-                    <div class="product-price">R$ 4.299,00</div>
-                    <button class="btn-buy" onclick="adicionarAoCarrinho('Notebook Pro Work', 4299.00, 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80')">Adicionar ao Carrinho</button>
+                    <h3>Notebook Pro Work</h3>
+                    <p class="description">Tela de 15.6" Full HD, 16GB de memória RAM e SSD de 512GB para máxima velocidade.</p>
+                    <div class="price-box">
+                        <span class="old-price">R$ 5.999,00</span>
+                        <span class="current-price">R$ 4.299,00</span>
+                    </div>
+                    <span class="shipping-badge">🚚 Frete Grátis</span>
+                    <button class="btn-add" onclick="adicionarAoCarrinho('Notebook Pro Work', 4299.00)">Adicionar ao Carrinho</button>
                 </div>
             </div>
 
             <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=600&q=80" alt="Fone de Ouvido Bluetooth" class="product-img">
+                <div class="badge-discount">OFERTA DO DIA</div>
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Fone de Ouvido Bluetooth" class="product-img">
                 <div class="product-info">
-                    <h3 class="product-name">Fone de Ouvido Bluetooth</h3>
-                    <p class="product-desc">Cancelamento de ruído ativo inteligente, bateria de longa duração com até 30 horas e som de estúdio de alta fidelidade.</p>
-                    <div class="product-price">R$ 299,00</div>
-                    <button class="btn-buy" onclick="adicionarAoCarrinho('Fone de Ouvido Bluetooth', 299.00, 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=600&q=80')">Adicionar ao Carrinho</button>
+                    <h3>Fone de Ouvido Bluetooth</h3>
+                    <p class="description">Cancelamento de ruído ativo inteligente, bateria de longa duração com até 30 horas e som de alta fidelidade.</p>
+                    <div class="price-box">
+                        <span class="old-price">R$ 499,00</span>
+                        <span class="current-price">R$ 299,00</span>
+                    </div>
+                    <span class="shipping-badge">🚚 Frete Grátis</span>
+                    <button class="btn-add" onclick="adicionarAoCarrinho('Fone de Ouvido Bluetooth', 299.00)">Adicionar ao Carrinho</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <a href="https://wa.me/5500000000000" class="whatsapp-float" target="_blank" aria-label="Link para o WhatsApp">
-        <svg viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
-    </a>
-
-    <footer class="footer">
-        <p>&copy; 2026 DevShop - Todos os direitos reservados.</p>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <h4>Políticas</h4>
+                <a href="#">Políticas de Envio e Prazo de Entrega</a>
+                <a href="#">Políticas de Reembolso e Devolução</a>
+                <a href="#">Termos de Serviço</a>
+                <a href="#">Quem Somos</a>
+            </div>
+            <div class="footer-trust">
+                <h4>Compra 100% Segura</h4>
+                <p>🔒 Ambiente criptografado com tecnologia SSL de alta segurança.</p>
+                <p>💳 Aceitamos Pix, Boleto e Cartão de Crédito em até 12x.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 DevShop - Todos os direitos reservados. CNPJ: 00.000.000/0001-00</p>
+        </div>
     </footer>
 
     <script src="script.js"></script>

@@ -385,4 +385,92 @@ body {
     .payment-methods-grid {
         grid-template-columns: 1fr;
     }
+/* Customizações para Dropshipping Profissional */
+.badge-discount {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff3838;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    z-index: 2;
+}
+.product-card { position: relative; } /* Garante o alinhamento da badge */
+
+.price-box {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+.old-price {
+    font-size: 13px;
+    color: #888;
+    text-decoration: line-through;
+}
+.current-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #a29bfe; /* Mantendo seu padrão roxo/azul */
+}
+.shipping-badge {
+    display: inline-block;
+    font-size: 12px;
+    color: #2ed573;
+    background: rgba(46, 213, 115, 0.1);
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+/* Caixa de Rastreamento no Histórico */
+.tracking-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.code-highlight {
+    color: #eccc68;
+    background: rgba(236, 204, 104, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.tracking-action {
+    margin-top: 15px;
+    text-align: left;
+}
+.btn-track {
+    display: inline-block;
+    background: #2ed573;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+.btn-track:hover { background: #26af5c; }
+
+/* Estrutura do Rodapé */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 40px 20px;
+    gap: 20px;
+}
+.footer-links a {
+    display: block;
+    color: #bbb;
+    text-decoration: none;
+    margin: 8px 0;
+    font-size: 14px;
+}
+.footer-links a:hover { color: #fff; }
+.footer-trust p { font-size: 14px; color: #ccc; margin: 5px 0; }
 }

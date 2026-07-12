@@ -3,42 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevShop - Histórico de Compras</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <title>Meus Pedidos | DevShop</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <header class="navbar">
-        <div class="container">
-            <a href="index.html" class="logo">DevShop</a>
+    <header>
+        <div class="nav-container">
+            <div class="logo">DevShop</div>
             <nav>
-                <ul class="nav-links">
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="produtos.html">Produtos</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                    <li><a href="carrinho.html">Carrinho 🛒</a></li>
-                    <li><a href="historico.html" class="active">Meus Pedidos</a></li>
-                </ul>
+                <a href="index.html">Início</a>
+                <a href="produtos.html">Produtos</a>
+                <a href="contato.html">Contato</a>
+                <a href="carrinho.html">Carrinho</a>
+                <a href="historico.html" class="active">Meus Pedidos</a>
             </nav>
         </div>
     </header>
 
-    <main class="container content">
+    <main class="container">
         <h2 class="section-title">Histórico de Compras</h2>
         
-        <div id="historico-container" style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;"></div>
+        <div class="order-container">
+            <div class="order-card">
+                <div class="order-header">
+                    <span class="order-id">Pedido: <strong>#884556 (PIX)</strong></span>
+                    <span class="order-date">09/07/2026 às 23:26</span>
+                </div>
+                <hr class="divider">
+                <div class="order-body">
+                    <ul class="order-items">
+                        <li>1x Smartphone Alpha - <span class="item-price">R$ 1.999,00</span></li>
+                        <li>1x Notebook Pro Work - <span class="item-price">R$ 4.299,00</span></li>
+                        <li>1x Monitor UltraWide 29' - <span class="item-price">R$ 1.150,00</span></li>
+                    </ul>
+                </div>
+                <hr class="divider">
+                <div class="order-footer">
+                    <div class="tracking-box">
+                        <span class="status-badge green">Status: ✓ Processado</span>
+                        <span class="tracking-code">Rastreio: <strong class="code-highlight">BR684920485CN</strong></span>
+                    </div>
+                    <span class="order-total">Total: <strong>R$ 7.448,00</strong></span>
+                </div>
+                <div class="tracking-action">
+                    <a href="https://rastreamento.correios.com.br" target="_blank" class="btn-track">Acompanhar Entrega nos Correios</a>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2026 DevShop - Todos os direitos reservados.</p>
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2026 DevShop - Todos os direitos reservados.</p>
+        </div>
     </footer>
-
-    <script src="script.js"></script>
-    <script>
-        window.onload = function() {
-            renderizarHistorico();
-        };
-    </script>
 </body>
 </html>
