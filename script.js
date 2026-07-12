@@ -69,7 +69,7 @@ const productDatabase = {
         images: [
             "https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=600&q=80",
             "https://images.unsplash.com/photo-1580481072645-022f9a6dbf27?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=600&q=80", // Imagem corrigida
+            "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=600&q=80",
             "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=600&q=80"
         ]
     }
@@ -79,7 +79,7 @@ const productDatabase = {
 function mostrarNotificacao(mensagem) {
     const toast = document.createElement('div');
     toast.className = 'toast-notification';
-    toast.innerText = message = mensagem;
+    toast.innerText = mensagem;
 
     document.body.appendChild(toast);
 
@@ -154,7 +154,7 @@ function processarPagamento(event) {
     }, 1500);
 }
 
-// Gerenciador de Eventos para Janela Modal e outras visualizações ao carregar o DOM
+// Gerenciador de Eventos ao carregar o DOM
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("product-modal");
     const closeModal = document.querySelector(".close-modal");
@@ -192,21 +192,20 @@ document.addEventListener("DOMContentLoaded", () => {
         if (historico.length === 0) {
             historicoContainer.innerHTML = `<p style="text-align:center; color:#64748b;">Nenhum pedido encontrado.</p>`;
         } else {
-            historicoContainer.innerHTML = ''; // Limpa conteúdo prévio
+            historicoContainer.innerHTML = '';
             historico.forEach(pedido => {
                 let itensHTML = '';
                 pedido.itens.forEach(item => {
                     itensHTML += `<p style="font-size:0.95rem; margin:4px 0;">• ${item.nome} (x${item.quantidade}) - R$ ${(item.preco * item.quantidade).toFixed(2)}</p>`;
                 });
 
-                // Removido flex-direction fixo via inline style para herdar o comportamento responsivo da classe .cart-card customizada
                 historicoContainer.innerHTML += `
                     <div class="product-card cart-card" style="padding: 20px; gap:10px;">
                         <div style="display:flex; justify-content:space-between; border-bottom:1px solid #cbd5e1; padding-bottom:8px; flex-wrap:wrap; width: 100%;">
                             <strong>Pedido #${pedido.id}</strong>
                             <span style="color:#64748b; font-size:0.9rem;">${pedido.data}</span>
                         </div>
-                        <div style="width: 100%;">${itensHTML}</div>
+                        <div style="width: 100%; text-align: left;">${itensHTML}</div>
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; flex-wrap:wrap; gap:10px; width: 100%;">
                             <div>Total: <strong style="color:#4f46e5; font-size:1.2rem;">R$ ${pedido.total.toFixed(2)}</strong> <small style="color:#64748b;">(${pedido.metodo.toUpperCase()})</small></div>
                             <span style="background:#dcfce7; color:#15803d; padding:4px 12px; border-radius:20px; font-size:0.85rem; font-weight:600;">Pedido Entregue</span>
@@ -216,9 +215,14 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
+
+    // Lógica para preencher o Resumo da Compra na página de Pagamento
+    if (window.location.pathname.includes('pagamento.html')) {
+        renderizarResumoPagamento();
+    }
 });
 
-// Abre o Modal, preenche dados e constrói a barra com os 4 ângulos de miniatura
+// Abre o Modal, preenche dados e constrói as miniaturas
 function openProductModal(product) {
     const modal = document.getElementById("product-modal");
     const mainImg = document.getElementById("modal-main-img");
@@ -257,7 +261,7 @@ function openProductModal(product) {
     modal.style.display = "block";
 }
 
-// Função auxiliar interna para renderizar elementos na visualização do carrinho
+// Renderiza itens na página do carrinho
 function renderizarCarrinho() {
     const container = document.getElementById('carrinho-container');
     const totalElement = document.getElementById('carrinho-total');
@@ -274,12 +278,11 @@ function renderizarCarrinho() {
 
     carrinho.forEach((item, index) => {
         total += item.preco * item.quantidade;
-        // Substituído estilos fixos inline para usar a classe CSS .cart-card, garantindo a quebra de linha em telas pequenas
         container.innerHTML += `
             <div class="product-card cart-card">
                 <div class="cart-item-left">
                     <img src="${item.img}" style="width:70px; height:70px; object-fit:cover; border-radius:8px;">
-                    <div>
+                    <div style="text-align: left;">
                         <h4 style="margin:0 0 5px 0;">${item.nome}</h4>
                         <span style="color:#64748b; font-size:0.9rem;">R$ ${item.preco.toFixed(2)}</span>
                     </div>
@@ -311,4 +314,36 @@ function alterarQuantidade(index, mudanca) {
 function finalizarCompra() {
     if (carrinho.length === 0) return;
     window.location.href = 'pagamento.html';
+}
+
+// Injeta dinamicamente o resumo de compras na página de pagamento/checkout
+function renderizarResumoPagamento() {
+    const resumoContainer = document.getElementById('resumo-itens-pagamento');
+    const totalElement = document.getElementById('resumo-total-pagamento');
+    let carrinhoCheckout = JSON.parse(localStorage.getItem('devshop_carrinho')) || [];
+    
+    if (!resumoContainer) return;
+    
+    if (carrinhoCheckout.length === 0) {
+        resumoContainer.innerHTML = "<p style='color:#64748b;'>Nenhum item no carrinho.</p>";
+        if(totalElement) totalElement.innerText = "R$ 0,00";
+        return;
+    }
+    
+    resumoContainer.innerHTML = '';
+    let total = 0;
+    
+    carrinhoCheckout.forEach(item => {
+        total += item.preco * item.quantidade;
+        resumoContainer.innerHTML += `
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; border-bottom: 1px dashed #e2e8f0; padding-bottom: 8px; width: 100%;">
+                <span>${item.nome} <strong>(x${item.quantidade})</strong></span>
+                <span style="font-weight: 600; color: #0f172a;">R$ ${(item.preco * item.quantidade).toFixed(2)}</span>
+            </div>
+        `;
+    });
+    
+    if(totalElement) {
+        totalElement.innerText = `R$ ${total.toFixed(2)}`;
+    }
 }
