@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevShop - Pagamento</title>
-    <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,88 +11,65 @@
     <header class="navbar">
         <div class="container">
             <a href="index.html" class="logo">DevShop</a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="produtos.html">Produtos</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                    <li><a href="carrinho.html">Carrinho 🛒</a></li>
-                    <li><a href="historico.html">Meus Pedidos</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 
     <main class="container content">
-        <h2 class="section-title">Finalizar Pagamento</h2>
+        <h2 class="section-title">Finalizar Compra</h2>
         
         <div class="payment-layout">
+            <form class="contact-form" onsubmit="processarPagamento(event)">
+                <h3 style="margin-bottom: 15px;">1. Dados de Entrega</h3>
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Endereço de Entrega</label>
+                    <input type="text" required>
+                </div>
+
+                <h3 style="margin-top: 20px; margin-bottom: 15px;">2. Método de Pagamento</h3>
+                <div class="payment-methods-grid">
+                    <label class="method-option">
+                        <input type="radio" name="metodo_pagamento" value="pix" checked onclick="alternarMetodoPagamento('pix')">
+                        <div class="method-box">
+                            <span class="method-icon">📱</span><span>Pix</span>
+                        </div>
+                    </label>
+                    <label class="method-option">
+                        <input type="radio" name="metodo_pagamento" value="cartao" onclick="alternarMetodoPagamento('cartao')">
+                        <div class="method-box">
+                            <span class="method-icon">💳</span><span>Cartão</span>
+                        </div>
+                    </label>
+                    <label class="method-option">
+                        <input type="radio" name="metodo_pagamento" value="boleto" onclick="alternarMetodoPagamento('boleto')">
+                        <div class="method-box">
+                            <span class="method-icon">📄</span><span>Boleto</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div id="area-pix" style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <p style="font-size: 0.9rem;">O código Copia e Cola do PIX será gerado após o envio.</p>
+                </div>
+                <div id="area-cartao" style="display:none; background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <div class="form-group"><label>Número do Cartão</label><input type="text"></div>
+                </div>
+                <div id="area-boleto" style="display:none; background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <p style="font-size: 0.9rem;">O boleto bancário será enviado por e-mail.</p>
+                </div>
+
+                <button type="submit" class="btn-buy" style="margin-top: 15px;">Confirmar e Pagar</button>
+            </form>
+
             <div class="contact-form">
-                <h3 style="margin-bottom: 1.5rem; color: #0f172a;">Detalhes da Entrega & Pagamento</h3>
-                <form id="form-pagamento" onsubmit="processarPagamento(event)">
-                    
-                    <div class="form-group">
-                        <label for="nome-completo">Nome Completo</label>
-                        <input type="text" id="nome-completo" required placeholder="Ex: Maria Silva">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="endereco-entrega">Endereço de Envio Completo</label>
-                        <input type="text" id="endereco-entrega" required placeholder="Rua, número, andar e localidade">
-                    </div>
-
-                    <div class="payment-methods-grid">
-                        <label class="method-option" onclick="alternarMetodoPagamento('cartao')">
-                            <input type="radio" name="metodo_pagamento" value="CARTÃO" checked>
-                            <div class="method-box">
-                                <span class="method-icon">💳</span>
-                                <span>Cartão</span>
-                            </div>
-                        </label>
-                        <label class="method-option" onclick="alternarMetodoPagamento('pix')">
-                            <input type="radio" name="metodo_pagamento" value="PIX">
-                            <div class="method-box">
-                                <span class="method-icon">⚡</span>
-                                <span>Pix</span>
-                            </div>
-                        </label>
-                        <label class="method-option" onclick="alternarMetodoPagamento('boleto')">
-                            <input type="radio" name="metodo_pagamento" value="BOLETO">
-                            <div class="method-box">
-                                <span class="method-icon">📄</span>
-                                <span>Boleto</span>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div id="area-cartao">
-                        <div class="form-group">
-                            <label for="num-cartao">Número do Cartão</label>
-                            <input type="text" id="num-cartao" placeholder="0000 0000 0000 0000">
-                        </div>
-                    </div>
-
-                    <div id="area-pix" style="display: none;">
-                        <div style="text-align: center; padding: 1rem 0;">
-                            <p style="color: #475569; font-size: 0.95rem;">O QR Code Pix será gerado imediatamente após confirmar o pedido.</p>
-                        </div>
-                    </div>
-
-                    <div id="area-boleto" style="display: none;">
-                        <div style="text-align: center; padding: 1rem 0;">
-                            <p style="color: #475569; font-size: 0.95rem;">Compensação bancária de 1 a 2 dias úteis.</p>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-buy" style="width: 100%; margin-top: 1.5rem;">Confirmar e Pagar</button>
-                </form>
-            </div>
-
-            <div class="contact-form" style="max-width: 100%; margin: 0; background: rgba(255,255,255,0.6);">
-                <h3 style="margin-bottom: 1.5rem; color: #0f172a;">Resumo do Pedido</h3>
-                <div id="resumo-itens-pagamento" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem;"></div>
-                <div style="border-top: 1px solid #cbd5e1; padding-top: 1rem; font-size: 1.2rem; font-weight: 700; text-align: right;">
-                    Total: <span id=\"total-pagamento\" style="color: #4f46e5;">R$ 0,00</span>
+                <h3 style="margin-bottom: 15px; border-bottom: 1px solid #cbd5e1; padding-bottom: 8px;">Resumo do Pedido</h3>
+                <div id="resumo-itens-pagamento" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;"></div>
+                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; border-top: 1px solid #cbd5e1; padding-top: 10px;">
+                    <span>Total:</span>
+                    <span id="total-pagamento" style="color: #4f46e5;">R$ 0,00</span>
                 </div>
             </div>
         </div>

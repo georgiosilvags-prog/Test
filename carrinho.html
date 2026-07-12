@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevShop - Carrinho</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <title>DevShop - Meu Carrinho</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,24 +24,17 @@
     </header>
 
     <main class="container content">
-        <h2 class="section-title">Seu Carrinho</h2>
+        <h2 class="section-title">Seu Carrinho de Compras</h2>
         
         <div id="carrinho-container"></div>
 
         <div class="cart-resume">
-            <div class="cart-total-box">
-                <span style="font-size: 1.1rem; color: #64748b;">Total do Pedido:</span>
-                <strong id="carrinho-total" style="font-size: 1.6rem; color: #4f46e5; margin-left: 10px;">R$ 0,00</strong>
+            <div>
+                <h3>Total do Pedido: <span id="carrinho-total" style="color: #4f46e5;">R$ 0,00</span></h3>
             </div>
-            <button class="btn-buy" style="width: 100%; max-width: 300px;" onclick="finalizarCompra()">
-                Finalizar Compra
-            </button>
+            <button class="btn-buy" style="width: auto;" onclick="finalizarCompra()">Finalizar Compra</button>
         </div>
     </main>
-
-    <a href="https://wa.me/5500000000000" class="whatsapp-float" target="_blank" aria-label="Link para o WhatsApp">
-        <svg viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3 18.7-68.1-4.4-7c-18.1-29-27.6-62.4-27.6-96.9 0-113.7 92.6-206.3 206.3-206.3 55.1 0 107 21.4 146.1 60.5 39.1 39.1 60.5 90.9 60.5 145.8 0 113.7-92.6 206.3-206.5 206.3zM345.6 292.5c-6.4-3.2-38.1-18.8-44-21-5.9-2.1-10.2-3.2-14.5 3.2-4.3 6.4-16.7 21-20.5 25.2-3.8 4.3-7.5 4.8-14 1.6-6.5-3.2-27.4-10.1-52.2-32.2-19.3-17.2-32.3-38.5-36.1-45-3.8-6.5-.4-9.9 2.8-13.1 2.9-2.9 6.5-7.5 9.7-11.3 3.2-3.8 4.3-6.5 6.5-10.8 2.2-4.3 1.1-8.1-.5-11.3-1.6-3.2-14.5-34.9-19.9-47.9-5.3-12.8-10.7-11.1-14.5-11.3-3.7-.2-8.1-.2-12.4-.2-4.3 0-11.3 1.6-17.2 7.9-5.9 6.4-22.6 22.1-22.6 53.9 0 31.8 23.1 62.4 26.3 66.7 3.2 4.3 45.4 69.4 110.1 97.4 15.4 6.7 27.5 10.7 36.9 13.7 15.5 4.9 29.7 4.2 40.8 2.6 12.4-1.9 38.1-15.6 43.4-30.7 5.4-15 5.4-27.9 3.8-30.7-1.7-2.7-6-4.3-12.4-7.5z"/></svg>
-    </a>
 
     <script src="script.js"></script>
 </body>
