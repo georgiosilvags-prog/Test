@@ -132,7 +132,7 @@ function adicionarAoCarrinho(idProduto) {
     }
 }
 
-// INTEGRAÇÃO COM CHECKOUT EXTERNO SEGURO (Substitui o antigo pagamento.html local)
+// INTEGRAÇÃO COM CHECKOUT EXTERNO SEGURO
 function finalizarCompra() {
     if (carrinho.length === 0) {
         mostrarNotificacao('Seu carrinho está vazio.');
@@ -159,7 +159,6 @@ function finalizarCompra() {
     mostrarNotificacao('Redirecionando para o ambiente seguro de pagamento...');
 
     // CONFIGURAÇÃO DO SEU CHECKOUT DE DROPSHIPPING (Ex: Yampi, CartX ou Link do Mercado Pago)
-    // Quando criar a sua conta de gateway, substitua esta URL base pela URL fornecida por eles.
     const URL_BASE_CHECKOUT = "https://sualoja.yampi.io/r/"; 
 
     // Cria os parâmetros de envio seguros no link
@@ -248,9 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeModal = document.querySelector(".close-modal");
     
     document.querySelectorAll(".product-card").forEach(card => {
-        const img = card.querySelector("img");
+        const img = card.querySelector(".product-img");
         if(img) {
-            img.style.cursor = "pointer";
             img.addEventListener("click", () => {
                 const productId = card.getAttribute("data-id");
                 const product = productDatabase[productId];
