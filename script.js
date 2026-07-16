@@ -1,306 +1,122 @@
 // Inicializa o carrinho buscando dados salvos no LocalStorage ou cria uma lista vazia
 let carrinho = JSON.parse(localStorage.getItem('devshop_carrinho')) || [];
 
-// Banco de Dados contendo as informações e os preços REAIS de cada produto
+// Banco de Dados focado em E-books, Templates e PDFs
 const productDatabase = {
-    "smartphone": {
-        id: "smartphone",
-        name: "Smartphone Alpha",
-        badge: "ÚLTIMAS UNIDADES",
-        desc: "Processador octa-core de última geração, 128GB de armazenamento interno expansível e câmara quádrupla ultra-nítida assistida por inteligência artificial.",
-        oldPrice: "R$ 2.799,00",
-        currentPrice: "R$ 1.999,00",
-        priceValue: 1999.00,
+    "ebook-js": {
+        id: "ebook-js",
+        name: "E-book: JavaScript do Zero ao Mestre",
+        badge: "PDF DIGITAL",
+        desc: "Domine a linguagem de programação mais popular do mundo. Guia prático com projetos reais, exercícios resolvidos e acesso a atualizações vitalícias.",
+        oldPrice: "R$ 97,00",
+        currentPrice: "R$ 47,00",
+        priceValue: 47.00,
+        hotmartUrl: "https://pay.hotmart.com/PRODUTO_EBOOK_JS_AQUI", // Insira seu Link da Hotmart aqui
         images: [
-            "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1565849904461-09a7dfdb3556?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1573148195900-7845dcb9b127?auto=format&fit=crop&w=600&q=80"
+            "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=600&q=80"
         ]
     },
-    "notebook": {
-        id: "notebook",
-        name: "Notebook Pro Work",
-        badge: "30% OFF",
-        desc: "Ecrã de 15.6\" Full HD com painel IPS, 16GB de memória RAM DDR4 e SSD NVMe de 512GB. Ideal para desenvolvimento de software e alta produtividade.",
-        oldPrice: "R$ 5.999,00",
-        currentPrice: "R$ 4.299,00",
-        priceValue: 4299.00,
+    "template-notion": {
+        id: "template-notion",
+        name: "Template Notion: Produtividade Extrema",
+        badge: "TEMPLATE EDITÁVEL",
+        desc: "O sistema definitivo de organização pessoal e profissional. Controle suas tarefas, finanças, estudos e projetos em um único painel minimalista.",
+        oldPrice: "R$ 79,00",
+        currentPrice: "R$ 29,90",
+        priceValue: 29.90,
+        hotmartUrl: "https://pay.hotmart.com/PRODUTO_TEMPL_NOTION_AQUI", // Insira seu Link da Hotmart aqui
         images: [
-            "https://images.unsplash.com/photo-1496181130204-755241524eab?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=80"
+            "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80"
         ]
     },
-    "fone": {
-        id: "fone",
-        name: "Fone de Ouvido Bluetooth",
-        badge: "OFERTA DO DIA",
-        desc: "Cancelamento ativo de ruído inteligente (ANC), driver dinâmico de alta fidelidade e bateria interna com autonomia para até 40 horas de reprodução contínua.",
-        oldPrice: "R$ 499,00",
-        currentPrice: "R$ 299,00",
-        priceValue: 299.00,
+    "guia-arquitetura": {
+        id: "guia-arquitetura",
+        name: "PDF: Guia Prático de Arquitetura Limpa",
+        badge: "E-BOOK COMPLETO",
+        desc: "Aprenda a estruturar aplicações escaláveis, fáceis de testar e com baixo acoplamento usando princípios SOLID e Clean Architecture.",
+        oldPrice: "R$ 149,00",
+        currentPrice: "R$ 89,00",
+        priceValue: 89.00,
+        hotmartUrl: "https://pay.hotmart.com/PRODUTO_ARCH_GUIDE_AQUI", // Insira seu Link da Hotmart aqui
         images: [
-            "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=600&q=80"
-        ]
-    },
-    "teclado": {
-        id: "teclado",
-        name: "Teclado Mecânico RGB",
-        badge: "OFERTA RESTRITA",
-        desc: "Switches mecânicos lineares ultra responsivos, retroiluminação RGB customizável via hardware e estrutura superior em alumínio aeronáutico escovado.",
-        oldPrice: "R$ 499,00",
-        currentPrice: "R$ 349,90",
-        priceValue: 349.90,
-        images: [
-            "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1626958390898-162d3577f593?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1601445638532-3c6f6c3aa1d6?auto=format&fit=crop&w=600&q=80"
-        ]
-    },
-    "cadeira": {
-        id: "cadeira",
-        name: "Cadeira Ergonômica Pro",
-        badge: "40% DE DESCONTO",
-        desc: "Certificação ergonômica avançada com suporte lombar dinâmico tridimensional, apoios de braço articulados em 3 eixos e inclinação de até 135 graus.",
-        oldPrice: "R$ 1.499,00",
-        currentPrice: "R$ 989,90",
-        priceValue: 989.90,
-        images: [
-            "https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1580481072645-022f9a6dbf27?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=600&q=80"
+            "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=600&q=80"
         ]
     }
 };
 
-// Antievitação de XSS: Sanitiza dados strings vindos do LocalStorage
-function escaparHTML(string) {
-    const mapa = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#x27;',
-        "/": '&#x2F;'
-    };
-    return String(string).replace(/[&<>"'/]/g, (s) => mapa[s]);
+// Salvar carrinho localmente
+function salvarCarrinho() {
+    localStorage.setItem('devshop_carrinho', JSON.stringify(carrinho));
 }
 
-// Sistema de Notificação na Interface (Toast)
-function mostrarNotificacao(mensagem) {
-    const toast = document.createElement('div');
-    toast.className = 'toast-notification';
-    toast.innerText = mensagem; 
-    document.body.appendChild(toast);
-    setTimeout(() => toast.classList.add('show'), 50);
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 400);
-    }, 3000);
+// Adicionar produto ao carrinho
+function adicionarAoCarrinho(productId) {
+    const produtoInfo = productDatabase[productId];
+    if (!produtoInfo) return;
+
+    // Se já estiver no carrinho, avisa que o limite é 1 (já que é produto digital)
+    const existe = carrinho.find(item => item.id === productId);
+    if (existe) {
+        alert("Este produto digital já está no seu carrinho!");
+        return;
+    }
+
+    carrinho.push({ id: productId, quantidade: 1 });
+    salvarCarrinho();
+    alert(`"${produtoInfo.name}" foi adicionado ao carrinho!`);
 }
 
-// Adiciona produtos ao carrinho mantendo referências fixas e seguras
-function adicionarAoCarrinho(idProduto) {
-    const produtoOriginal = productDatabase[idProduto];
-    if (!produtoOriginal) return;
+// Renderiza os produtos na página principal e de catálogo
+document.addEventListener("DOMContentLoaded", () => {
+    const grid = document.querySelector(".product-grid");
+    if (grid) {
+        grid.innerHTML = "";
+        Object.values(productDatabase).forEach(product => {
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.setAttribute("data-id", product.id);
+            card.innerHTML = `
+                <div class="badge-discount">${product.badge}</div>
+                <img src="${product.images[0]}" alt="${product.name}" class="product-img open-details">
+                <div class="product-info">
+                    <h3 class="product-title open-details">${product.name}</h3>
+                    <p class="product-desc">${product.desc.substring(0, 75)}...</p>
+                    <div class="product-price">
+                        <span class="old-price">${product.oldPrice}</span>
+                        <span class="current-price">${product.currentPrice}</span>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-buy open-details" style="background: #334155;">Ver Detalhes</button>
+                        <a href="${product.hotmartUrl}" target="_blank" class="btn-buy" style="text-align: center; text-decoration: none; background: #f04e23; border: none; display: flex; align-items: center; justify-content: center;">Comprar Agora 🔥</a>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
 
-    const itemExistente = carrinho.find(item => item.id === idProduto);
-
-    if (itemExistente) {
-        itemExistente.quantidade += 1;
-    } else {
-        carrinho.push({ 
-            id: idProduto,
-            nome: produtoOriginal.name, 
-            img: produtoOriginal.images[0], 
-            quantidade: 1 
+        // Evento para abrir modal de detalhes ao clicar na imagem ou título
+        grid.addEventListener("click", (e) => {
+            if (e.target.classList.contains("open-details")) {
+                const card = e.target.closest(".product-card");
+                const id = card.getAttribute("data-id");
+                if (productDatabase[id]) {
+                    openProductModal(productDatabase[id]);
+                }
+            }
         });
     }
 
-    localStorage.setItem('devshop_carrinho', JSON.stringify(carrinho));
-    mostrarNotificacao(`${produtoOriginal.name} adicionado ao carrinho!`);
-    
-    if (window.location.pathname.includes('carrinho.html')) {
+    // Renderizar itens na página do Carrinho
+    const carrinhoContainer = document.getElementById("carrinho-container");
+    if (carrinhoContainer) {
         renderizarCarrinho();
-    }
-}
-
-// INTEGRAÇÃO COM CHECKOUT EXTERNO SEGURO
-function finalizarCompra() {
-    if (carrinho.length === 0) {
-        mostrarNotificacao('Seu carrinho está vazio.');
-        return;
-    }
-
-    let total = 0;
-    const itensValidados = [];
-
-    // Recalcula rigidamente com base no banco local para bloquear fraudes de alteração de preço
-    carrinho.forEach(item => {
-        const produtoOriginal = productDatabase[item.id];
-        if (produtoOriginal) {
-            total += produtoOriginal.priceValue * item.quantidade;
-            itensValidados.push({
-                id: produtoOriginal.id,
-                nome: produtoOriginal.name,
-                quantidade: item.quantidade,
-                preco: produtoOriginal.priceValue
-            });
-        }
-    });
-
-    mostrarNotificacao('Redirecionando para o ambiente seguro de pagamento...');
-
-    // CONFIGURAÇÃO DO SEU CHECKOUT DE DROPSHIPPING (Ex: Yampi, CartX ou Link do Mercado Pago)
-    const URL_BASE_CHECKOUT = "https://sualoja.yampi.io/r/"; 
-
-    // Cria os parâmetros de envio seguros no link
-    const parametrosUrl = itensValidados.map(item => `${item.id}=${item.quantidade}`).join('&');
-    const linkFinalCheckout = URL_BASE_CHECKOUT + "?" + parametrosUrl;
-
-    setTimeout(() => {
-        // Grava no histórico local do usuário que o pedido foi enviado para checkout externo
-        const historico = JSON.parse(localStorage.getItem('devshop_historico')) || [];
-        const novoPedidoPendente = {
-            id: Math.floor(100000 + Math.random() * 900000),
-            data: new Date().toLocaleDateString('pt-BR') + ' às ' + new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}),
-            itens: itensValidados,
-            total: total,
-            metodo: 'Checkout Cloud Seguro'
-        };
-        historico.unshift(novoPedidoPendente);
-        localStorage.setItem('devshop_historico', JSON.stringify(historico));
-
-        // Limpa o carrinho local para evitar duplicações
-        localStorage.removeItem('devshop_carrinho');
-        carrinho = [];
-
-        // Redireciona para o checkout blindado externo
-        window.location.href = linkFinalCheckout;
-    }, 1500);
-}
-
-// Renderiza itens na página do carrinho
-function renderizarCarrinho() {
-    const container = document.getElementById('carrinho-container');
-    const totalElement = document.getElementById('carrinho-total');
-    if (!container) return;
-
-    container.innerHTML = '';
-    let total = 0;
-
-    if (carrinho.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:#64748b; padding:2rem 0;">Seu carrinho está vazio.</p>';
-        totalElement.innerText = 'R$ 0,00';
-        return;
-    }
-
-    carrinho.forEach((item, index) => {
-        const produtoOriginal = productDatabase[item.id];
-        const precoSeguro = produtoOriginal ? produtoOriginal.priceValue : 0;
-        total += precoSeguro * item.quantidade;
-        
-        container.innerHTML += `
-            <div class="product-card cart-card">
-                <div class="cart-item-left">
-                    <img src="${escaparHTML(item.img)}" style="width:70px; height:70px; object-fit:cover; border-radius:8px;">
-                    <div style="text-align: left;">
-                        <h4 style="margin:0 0 5px 0;">${escaparHTML(item.nome)}</h4>
-                        <span style="color:#64748b; font-size:0.9rem;">R$ ${precoSeguro.toFixed(2)}</span>
-                    </div>
-                </div>
-                <div class="cart-item-right">
-                    <div style="display:flex; align-items:center; background:#f1f5f9; border-radius:8px; padding:2px;">
-                        <button onclick="alterarQuantidade(${index}, -1)" style="border:none; background:none; padding:5px 10px; cursor:pointer; font-weight:bold;">-</button>
-                        <span style="padding:0 10px;">${Number(item.quantidade)}</span>
-                        <button onclick="alterarQuantidade(${index}, 1)" style="border:none; background:none; padding:5px 10px; cursor:pointer; font-weight:bold;">+</button>
-                    </div>
-                    <strong style="color:#4f46e5; min-width:80px; text-align:right;">R$ ${(precoSeguro * item.quantidade).toFixed(2)}</strong>
-                </div>
-            </div>
-        `;
-    });
-
-    totalElement.innerText = `R$ ${total.toFixed(2)}`;
-}
-
-function alterarQuantidade(index, mudanca) {
-    if(!carrinho[index]) return;
-    carrinho[index].quantidade += mudanca;
-    if (carrinho[index].quantidade <= 0) {
-        carrinho.splice(index, 1);
-    }
-    localStorage.setItem('devshop_carrinho', JSON.stringify(carrinho));
-    renderizarCarrinho();
-}
-
-// Gerenciador de inicialização das telas e histórico
-document.addEventListener("DOMContentLoaded", () => {
-    const modal = document.getElementById("product-modal");
-    const closeModal = document.querySelector(".close-modal");
-    
-    document.querySelectorAll(".product-card").forEach(card => {
-        const img = card.querySelector(".product-img");
-        if(img) {
-            img.addEventListener("click", () => {
-                const productId = card.getAttribute("data-id");
-                const product = productDatabase[productId];
-                if (product) openProductModal(product);
-            });
-        }
-    });
-
-    if (closeModal) {
-        closeModal.addEventListener("click", () => { modal.style.display = "none"; });
-    }
-
-    window.addEventListener("click", (e) => {
-        if (e.target === modal) modal.style.display = "none";
-    });
-
-    if (window.location.pathname.includes('carrinho.html')) {
-        renderizarCarrinho();
-    }
-
-    if (window.location.pathname.includes('historico.html')) {
-        const historicoContainer = document.getElementById('historico-container');
-        const historico = JSON.parse(localStorage.getItem('devshop_historico')) || [];
-
-        if (historico.length === 0) {
-            historicoContainer.innerHTML = `<p style="text-align:center; color:#64748b;">Nenhum pedido encontrado.</p>`;
-        } else {
-            historicoContainer.innerHTML = '';
-            historico.forEach(pedido => {
-                let itensHTML = '';
-                pedido.itens.forEach(item => {
-                    itensHTML += `<p style="font-size:0.95rem; margin:4px 0;">• ${escaparHTML(item.nome)} (x${Number(item.quantidade)}) - R$ ${(item.preco * item.quantidade).toFixed(2)}</p>`;
-                });
-
-                historicoContainer.innerHTML += `
-                    <div class="product-card cart-card" style="padding: 20px; gap:10px;">
-                        <div style="display:flex; justify-content:space-between; border-bottom:1px solid #cbd5e1; padding-bottom:8px; flex-wrap:wrap; width: 100%;">
-                            <strong>Pedido #${Number(pedido.id)}</strong>
-                            <span style="color:#64748b; font-size:0.9rem;">${escaparHTML(pedido.data)}</span>
-                        </div>
-                        <div style="width: 100%; text-align: left;">${itensHTML}</div>
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; flex-wrap:wrap; gap:10px; width: 100%;">
-                            <div>Total: <strong style="color:#4f46e5; font-size:1.2rem;">R$ ${Number(pedido.total).toFixed(2)}</strong></div>
-                            <span style="background:#e0f2fe; color:#0369a1; padding:4px 12px; border-radius:20px; font-size:0.85rem; font-weight:600;">Redirecionado ao Checkout</span>
-                        </div>
-                    </div>
-                `;
-            });
-        }
     }
 });
 
+// Modal dinâmico com link seguro direto da Hotmart
 function openProductModal(product) {
     const modal = document.getElementById("product-modal");
     const mainImg = document.getElementById("modal-main-img");
@@ -331,10 +147,88 @@ function openProductModal(product) {
         thumbBar.appendChild(thumb);
     });
     
+    // Configura o botão do modal para direcionar direto à Hotmart
     const btnBuy = document.getElementById("modal-btn-buy");
+    btnBuy.innerText = "Comprar via Hotmart 🔥";
+    btnBuy.style.background = "#f04e23"; // Cor icônica da Hotmart
     btnBuy.onclick = () => {
-        adicionarAoCarrinho(product.id);
+        window.open(product.hotmartUrl, '_blank');
     };
     
-    modal.style.display = "block";
+    modal.style.display = "flex";
+}
+
+// Fechar modal ao clicar fora ou no botão de fechar
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("product-modal");
+    if (modal) {
+        const closeBtn = document.querySelector(".close-modal");
+        if (closeBtn) {
+            closeBtn.addEventListener("click", () => modal.style.display = "none");
+        }
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) modal.style.display = "none";
+        });
+    }
+});
+
+// Renderizar itens no Carrinho interno
+function renderizarCarrinho() {
+    const container = document.getElementById("carrinho-container");
+    const totalEl = document.getElementById("carrinho-total");
+    if (!container) return;
+
+    if (carrinho.length === 0) {
+        container.innerHTML = `<p style="text-align: center; font-size: 1.2rem; color: #64748b; padding: 2rem 0;">Seu carrinho está vazio. Escolha um de nossos infoprodutos!</p>`;
+        if (totalEl) totalEl.innerText = "R$ 0,00";
+        return;
+    }
+
+    container.innerHTML = "";
+    let somaTotal = 0;
+
+    carrinho.forEach(item => {
+        const prod = productDatabase[item.id];
+        if (!prod) return;
+
+        somaTotal += prod.priceValue;
+
+        const cartItem = document.createElement("div");
+        cartItem.className = "cart-item";
+        cartItem.style = "display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);";
+        cartItem.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="${prod.images[0]}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;">
+                <div>
+                    <h4 style="margin: 0 0 5px 0;">${prod.name}</h4>
+                    <span class="current-price" style="color: #f04e23; font-weight: bold;">${prod.currentPrice}</span>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <a href="${prod.hotmartUrl}" target="_blank" class="btn-buy" style="background: #f04e23; text-decoration: none; font-size: 0.9rem; padding: 8px 15px;">Pagar Seguro Hotmart 💳</a>
+                <button onclick="removerDoCarrinho('${prod.id}')" style="background: #ef4444; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer;">Remover</button>
+            </div>
+        `;
+        container.appendChild(cartItem);
+    });
+
+    if (totalEl) {
+        totalEl.innerText = `R$ ${somaTotal.toFixed(2).replace('.', ',')}`;
+    }
+}
+
+function removerDoCarrinho(productId) {
+    carrinho = carrinho.filter(item => item.id !== productId);
+    salvarCarrinho();
+    renderizarCarrinho();
+}
+
+// Se o usuário tentar "Finalizar Compra" no Carrinho, vamos guiá-lo para pagar individualmente os produtos
+function finalizarCompra() {
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+    
+    alert("Como os produtos digitais são entregues de forma 100% segura pela Hotmart, clique no botão vermelho 'Pagar Seguro Hotmart' ao lado de cada produto para concluir o seu acesso!");
 }
